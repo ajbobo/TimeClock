@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TimeClock_CS
 {
@@ -11,11 +10,22 @@ namespace TimeClock_CS
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		static void Main(string[] comparams)
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new frmMain());
+			// If there's a command-line parameter, assume it's a path to a document - open that document (used for editing the text files associated with this program)
+			if (comparams.Length > 0)
+			{
+				string filename = comparams[0];
+				Process p = new Process();
+				p.StartInfo.FileName = filename;
+				p.Start();
+			}
+			else
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new frmMain());
+			}
 		}
 	}
 }
